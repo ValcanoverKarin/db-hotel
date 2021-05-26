@@ -1,9 +1,26 @@
 1) Come si chiamano gli ospiti che hanno fatto più di due prenotazioni? 
+
+   SELECT COUNT(*) AS `numero_prenotazioni`, ospiti.name, ospiti.lastname 
+   FROM `prenotazioni_has_ospiti` 
+   INNER JOIN `ospiti` 
+   ON prenotazioni_has_ospiti.ospite_id = ospiti.id 
+   GROUP BY prenotazioni_has_ospiti.ospite_id 
+   HAVING numero_prenotazioni > 2;
+
 2) Stampare tutti gli ospiti per ogni prenotazione
 3) Stampare Nome, Cognome, Prezzo e Pagante per tutte le
    prenotazioni fatte a Maggio 2018
 4) Fai la somma di tutti i prezzi delle prenotazioni per le stanze del
    primo piano
+
+   SELECT sum(`price`)
+   FROM `prenotazioni`
+   INNER JOIN `pagamenti`
+   ON pagamenti.prenotazione_id = prenotazioni.id
+   INNER JOIN `stanze`
+   ON prenotazioni.stanza_id = stanze.id
+   WHERE `floor` = 1;
+   
 5) Prendi i dati di fatturazione per la prenotazione con id=7 
 6) Le stanze sono state tutte prenotate almeno una volta?
    (Visualizzare le stanze non ancora prenotate)
